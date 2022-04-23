@@ -28,7 +28,7 @@
                 </div>
             }
             </div>
-            <a class="thematic-title" href="/Categories/Create" style="text-align:center">
+            <a class="thematic-title-sec" href="/Categories/Create">
             Nueva Categoría</a>
         </section>
         <section class="item-list">
@@ -43,7 +43,6 @@
                     </div>
                     <div class="actions">
                         @Html.ActionLink("Editar", "Edit", new { id = item.id } , new { @class = "btn edit"})
-                        @Html.ActionLink("Borrar", "Delete", new { id = item.id }, new { @class = "btn delete"})
                     </div>
                 </div>
                 }
