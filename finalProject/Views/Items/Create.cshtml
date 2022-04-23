@@ -1,0 +1,74 @@
+﻿@model DataAccessLayer.Models.Item
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@{ 
+    WebImage photo = null;
+    if (IsPost) {
+        photo = WebImage.GetImageFromRequest();
+        if (photo != null) {
+            Model.image = photo.GetBytes();
+            //Model.image = Convert.toBase64String();
+        }
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="form-horizontal col-md-10">
+            <h4 class="thematic-title">Nuevo item</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group form-inline">
+                <label class="control-label col-md-2">Nombre: </label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Descripción: </label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Categorias: </label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.categoryId,
+                        (IEnumerable<SelectListItem>)ViewBag.categoryId,
+                        "Elige una categoría", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.categoryId,
+                        "Es necesario elegir una categoría", new { @class = "text-danger"})
+                </div>
+            </div>
+            @*
+            <div class="form-group">
+                <label class="control-label col-md-2">Image: </label>
+                <div class="col-md-10">
+                    <input class="form-control" type="file" name="Image"/>
+                </div>
+            </div>
+            *@
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save item" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="col-md-offset-1">
+    @Html.ActionLink("Regresar", "Index")
+</div>

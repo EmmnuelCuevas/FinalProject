@@ -1,0 +1,58 @@
+﻿@model finalProject.Models.FrontPageViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .scrollable {
+        min-height: 200px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+</style>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+</head>
+
+<main>
+    <div class="grid-container">
+        <section class="category-list">
+            <h2 style="text-align:center">Categorias</h2>
+            <div id="categories">
+            @foreach (var c in Model.Categories)
+            {
+                <div class="category-item">
+                    <button>@c.name</button>
+                </div>
+            }
+            </div>
+            <a class="thematic-title" href="/Categories/Create" style="text-align:center">
+            Nueva Categoría</a>
+        </section>
+        <section class="item-list">
+            <h2 style="text-align:center">@Model.Categories.First().name</h2>
+
+            <div id="items" class="scrollable">
+                @foreach (var item in Model.Categories.First().Items) {
+                <div class="item">
+                    <div class="content">
+                        <input type="text" class="text" value="@item.name" readonly />
+                        <label class="text" style="font-weight:100">@item.description</label>
+                    </div>
+                    <div class="actions">
+                        @Html.ActionLink("Editar", "Edit", new { id = item.id } , new { @class = "btn edit"})
+                        @Html.ActionLink("Borrar", "Delete", new { id = item.id }, new { @class = "btn delete"})
+                    </div>
+                </div>
+                }
+
+            </div>
+
+            <div id="new-item-block">
+                <a href="/Items/Create">Nuevo Item</a>
+            </div>
+        </section>
+    </div>
+</main>

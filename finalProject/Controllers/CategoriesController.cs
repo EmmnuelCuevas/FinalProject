@@ -49,11 +49,12 @@ namespace finalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,categoryId,name,createdOn")] Category category)
         {
+            category.categoryId = Guid.NewGuid();
             if (ModelState.IsValid)
             {
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("/Items/Index");
             }
 
             return View(category);

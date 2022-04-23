@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataAccessLayer.Context;
 using DataAccessLayer.Models;
+using finalProject.Models;
 
 namespace finalProject.Controllers
 {
@@ -18,8 +19,11 @@ namespace finalProject.Controllers
         // GET: Items
         public ActionResult Index()
         {
-            var items = db.Items.Include(i => i.Category);
-            return View(items.ToList());
+            var model = new FrontPageViewModel();
+            model.Categories = db.Categories.Include(i => i.Items).ToList();
+            model.Items = db.Items.ToList();
+            //var items = db.Items.Include(i => i.Category);
+            return View(model);
         }
 
         // GET: Items/Details/5
@@ -51,6 +55,7 @@ namespace finalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,itemId,categoryId,name,description,image,createdOn")] Item item)
         {
+            item.itemId = Guid.NewGuid();
             if (ModelState.IsValid)
             {
                 db.Items.Add(item);
@@ -107,6 +112,7 @@ namespace finalProject.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", item.categoryId);
             return View(item);
         }
 
