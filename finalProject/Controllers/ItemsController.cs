@@ -42,7 +42,7 @@ namespace finalProject.Controllers
         // GET: Items/Create
         public ActionResult Create()
         {
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name");
+            ViewBag.categories = new SelectList(db.Categories, "id", "name");
             return View();
         }
 
@@ -61,7 +61,7 @@ namespace finalProject.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", item.categoryId);
+            ViewBag.categories = new SelectList(db.Categories, "id", "name", item.categoryId);
             return View(item);
         }
 
@@ -77,7 +77,7 @@ namespace finalProject.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", item.categoryId);
+            ViewBag.categories = new SelectList(db.Categories, "id", "name", item.categoryId);
             return View(item);
         }
 
@@ -94,7 +94,7 @@ namespace finalProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index", "Items");
             }
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", item.categoryId);
+            ViewBag.categories = new SelectList(db.Categories, "id", "name");
             return View(item);
         }
 
@@ -110,7 +110,7 @@ namespace finalProject.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", item.categoryId);
+            ViewBag.categories = new SelectList(db.Categories, "id", "name", item.categoryId);
             return View(item);
         }
 
@@ -127,7 +127,7 @@ namespace finalProject.Controllers
 
         public ActionResult DisplayCategory(Guid id)
         {
-            TempData["currentCategory"] = db.Categories.Include(t => t.Items).First(t => t.id == id);
+            TempData["selectedCategoryId"] = id;
             return RedirectToAction("Index");
         }
 

@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Create";
 }
-
+@*
 @{ 
     WebImage photo = null;
     if (IsPost) {
@@ -14,7 +14,7 @@
         }
     }
 }
-
+*@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -46,10 +46,10 @@
                 <label class="control-label col-md-2">Categorias: </label>
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.categoryId,
-                        (IEnumerable<SelectListItem>)ViewBag.categoryId,
+                        (IEnumerable<SelectListItem>)ViewBag.categories,
                         "Elige una categoría", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.categoryId,
-                        "Es necesario elegir una categoría", new { @class = "text-danger"})
+                        "", new { @class = "text-danger"})
                 </div>
             </div>
             @*
@@ -61,14 +61,13 @@
             </div>
             *@
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <div class="back-link-margin col-md-1 col-md-offset-1">
+                    @Html.ActionLink("Regresar", "Index")
+                </div>
+                <div class="col-md-2">
                     <input type="submit" value="Create item" class="btn btn-default" />
                 </div>
             </div>
         </div>
     </div>
 }
-
-<div class="col-md-offset-2">
-    @Html.ActionLink("Regresar", "Index")
-</div>

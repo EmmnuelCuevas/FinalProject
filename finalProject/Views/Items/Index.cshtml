@@ -20,7 +20,7 @@
     <div class="grid-container">
 
         <section class="category-list">
-            <h2 style="text-align:center">Categorias</h2>
+            <h2 class="text-info" style="text-align:center">Categorias</h2>
             <div id="categories">
             @foreach (var c in Model.Categories)
             {
@@ -37,25 +37,20 @@
         <section class="item-list">
             @{
                 var category = Model.Categories.FirstOrDefault();
-                if (TempData.ContainsKey("currentCategory"))
+                if (TempData.ContainsKey("selectedCategoryId"))
                 {
-                    category = (DataAccessLayer.Models.Category)TempData.Peek("currentCategory");
+                    var id = (Guid)TempData.Peek("selectedCategoryId");
+                    category = Model.Categories.First(t => t.id == id);
                 }
 
                 string text = category != null ? category.name : "No hay categorías disponibles";
 
-                <h2 style="text-align:center">@text</h2>
+                <h2 style="text-align:center; color: var(--gray)">@text</h2>
             }
 
             <div id="items" class="scrollable">
                 @{
-                    var myCategory = Model.Categories.FirstOrDefault();
-                    if (TempData.ContainsKey("currentCategory"))
-                    {
-                        myCategory = (DataAccessLayer.Models.Category)TempData.Peek("currentCategory");
-                    }
-
-                    foreach (var item in myCategory.Items)
+                    foreach (var item in category.Items)
                     {
                         <div class="item">
                             <div class="content">

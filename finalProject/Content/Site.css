@@ -86,59 +86,56 @@ main {
         font-weight: 300;
         color: var(--gray);
         margin-bottom: 1rem;
+        background-image: inherit;
     }
 
-#items .item {
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--darkest);
-    padding: 1rem;
-    border-radius: 1rem;
-    margin-bottom: 1rem;
+#items {
+    padding-top: 1rem; 
 }
 
-    #items .item .content .text {
-        color: var(--light);
-        font-size: 1.5rem;
-        width: 100%;
-        display: block;
-        transition: 0.4s;
+    #items .item {
+        display: flex;
+        justify-content: space-between;
+        background-color: var(--darkest);
+        padding: 1rem;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
     }
 
-        #items .item .content .text :not(:read-only) {
-            color: var(--pink);
+        #items .item .content .text {
+            color: var(--light);
+            font-size: 1.5rem;
+            width: 100%;
+            display: block;
+            transition: 0.4s;
         }
+
+            #items .item .content .text :not(:read-only) {
+                color: var(--pink);
+            }
 
     #items .item .actions {
         display: flex;
         margin: 0 -0.5rem;
     }
 
-.item .actions a {
-    cursor: pointer;
-    margin: 0.75rem 2rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-}
+        .item .actions .edit {
+            background-image: linear-gradient(to right, var(--pink), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .item .actions button:hover {
-        opacity: 0.8;
-    }
+        .item .actions .delete {
+            color: crimson;
+        }
 
-    .item .actions button:active {
-        opacity: 0.6;
-    }
-
-.item .actions .edit {
-    background-image: linear-gradient(to right, var(--pink), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.item .actions .delete {
-    color: crimson;
-}
+        .item .actions a {
+            cursor: pointer;
+            margin: 0.75rem 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
 
 #new-item-block {
     margin: auto;
@@ -172,6 +169,7 @@ main {
 }
 
     .category-list #categories {
+        padding-top: 1rem;
         background-color: var(--darkest);
         justify-content: space-between;
         min-height: 300px;
@@ -197,19 +195,11 @@ main {
     grid-template-rows: auto;
 }
 
-h4 {
-    font-size: 3rem;
-    font-weight: 700;
-    background-image: linear-gradient(var(--pink), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-a.thematic-title {
+.thematic-title {
     font-size: 2rem;
     font-weight: 700;
     text-transform: uppercase;
-    background: linear-gradient(to right, var(--pink), var(--purple));
+    background: linear-gradient(var(--pink), var(--purple));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
