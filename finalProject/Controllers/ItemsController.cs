@@ -21,8 +21,6 @@ namespace finalProject.Controllers
         {
             var model = new FrontPageViewModel();
             model.Categories = db.Categories.Include(i => i.Items).ToList();
-            model.Items = db.Items.ToList();
-            //var items = db.Items.Include(i => i.Category);
             return View(model);
         }
 
@@ -94,7 +92,7 @@ namespace finalProject.Controllers
             {
                 db.Entry(item).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Items");
             }
             ViewBag.categoryId = new SelectList(db.Categories, "id", "name", item.categoryId);
             return View(item);
@@ -124,6 +122,12 @@ namespace finalProject.Controllers
             Item item = db.Items.Find(id);
             db.Items.Remove(item);
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult DisplayCategory(Guid id)
+        {
+            TempData["currentCategory"] = db.Categories.Include(t => t.Items).First(t => t.id == id);
             return RedirectToAction("Index");
         }
 

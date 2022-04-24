@@ -18,39 +18,65 @@
 
 <main>
     <div class="grid-container">
+
         <section class="category-list">
             <h2 style="text-align:center">Categorias</h2>
             <div id="categories">
             @foreach (var c in Model.Categories)
             {
                 <div class="category-item">
-                    <button>@c.name</button>
+                    @Html.ActionLink(c.name, "DisplayCategory", new { id = c.id }, new { @class = "category-link" })
                 </div>
             }
             </div>
-            <a class="thematic-title-sec" href="/Categories/Create">
-            Nueva Categoría</a>
+            <div style="margin-top: 1rem">
+                <a class="thematic-title" href="/Categories/Create">Nueva Categoría</a>
+            </div>
         </section>
-        <section class="item-list">
-            <h2 style="text-align:center">@Model.Categories.First().name</h2>
 
-            <div id="items" class="scrollable">
-                @foreach (var item in Model.Categories.First().Items) {
-                <div class="item">
-                    <div class="content">
-                        <input type="text" class="text" value="@item.name" readonly />
-                        <label class="text" style="font-weight:100">@item.description</label>
-                    </div>
-                    <div class="actions">
-                        @Html.ActionLink("Editar", "Edit", new { id = item.id } , new { @class = "btn edit"})
-                    </div>
-                </div>
+        <section class="item-list">
+            @{
+                var category = Model.Categories.FirstOrDefault();
+                if (TempData.ContainsKey("currentCategory"))
+                {
+                    category = (DataAccessLayer.Models.Category)TempData.Peek("currentCategory");
                 }
 
-            </div>
+                string text = category != null ? category.name : "No hay categorías disponibles";
 
+                <h2 style="text-align:center">@text</h2>
+            }
+
+            <div id="items" class="scrollable">
+                @{
+                    var myCategory = Model.Categories.FirstOrDefault();
+                    if (TempData.ContainsKey("currentCategory"))
+                    {
+                        myCategory = (DataAccessLayer.Models.Category)TempData.Peek("currentCategory");
+                    }
+
+                    foreach (var item in myCategory.Items)
+                    {
+                        <div class="item">
+                            <div class="content">
+                                <input type="text" class="text" value="@item.name" readonly />
+                                <label class="text" style="font-weight:100">@item.description</label>
+                            </div>
+                            <div class="actions">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "btn edit" })
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
             <div id="new-item-block">
-                <a href="/Items/Create">Nuevo Item</a>
+                <div class="row">
+                    <a href="/Items/Create">Nuevo Item</a>
+                </div>
+                <div class="row">
+                    @Html.ActionLink("Editar Categoría", "Edit",
+                        "Categories", new { id = Model.Categories.First().id }, null)
+                </div>
             </div>
         </section>
     </div>
