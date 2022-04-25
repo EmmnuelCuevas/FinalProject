@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Context;
 using DataAccessLayer.Models;
+using finalProject.Helpers;
 using finalProject.Models;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace finalProject.Controllers
             {
                 using (var context = new AppDbContext())
                 {
-                    var password = model.password;
+                    var password =  EncryptHelper.Encode(model.password); ;
 
                     User user = context.Users
                                        .Where(u => u.email == model.email && u.password == password)

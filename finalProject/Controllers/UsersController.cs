@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataAccessLayer.Context;
 using DataAccessLayer.Models;
+using finalProject.Helpers;
 
 namespace finalProject.Controllers
 {
@@ -51,7 +52,8 @@ namespace finalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                user.id = Guid.NewGuid();
+                user.password = EncryptHelper.Encode(user.password);
+                //user.id = Guid.NewGuid();
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
