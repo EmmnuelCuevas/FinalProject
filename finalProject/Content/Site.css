@@ -102,6 +102,11 @@ main {
         margin-bottom: 1rem;
     }
 
+        #items .item .content div {
+            display: inline-block;
+            margin-left: 1rem;
+        }
+
         #items .item .content .text {
             color: var(--light);
             font-size: 1.5rem;
@@ -110,8 +115,14 @@ main {
             transition: 0.4s;
         }
 
+
             #items .item .content .text :not(:read-only) {
                 color: var(--pink);
+            }
+
+            #items .item .content div label {
+                font-weight: 100;
+                color: var(--gray) !important;
             }
 
     #items .item .actions {
@@ -217,4 +228,9 @@ a.thematic-title-sec {
 
 .category-link {
     color: var(--light);
+}
+
+.item-image {
+    width: 100px;
+    display: inline-block;
 }

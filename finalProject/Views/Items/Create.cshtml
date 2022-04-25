@@ -1,27 +1,19 @@
-﻿@model DataAccessLayer.Models.Item
+﻿@model finalProject.Models.ItemViewModel
 
 @{
     ViewBag.Title = "Create";
 }
-@*
-@{ 
-    WebImage photo = null;
-    if (IsPost) {
-        photo = WebImage.GetImageFromRequest();
-        if (photo != null) {
-            Model.image = photo.GetBytes();
-            //Model.image = Convert.toBase64String();
-        }
-    }
-}
-*@
-@using (Html.BeginForm())
+
+@using (Html.BeginForm("Create", "Items", FormMethod.Post, new { enctype = "multipart/form-data"} ))
 {
     @Html.AntiForgeryToken()
     <div class="row">
         <div class="col-md-1"></div>
 
         <div class="form-horizontal col-md-10">
+            @Html.HiddenFor(m => m.Item.id)
+            @Html.HiddenFor(m => m.Item.itemId)
+
             <h4 class="thematic-title">Nuevo item</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -29,37 +21,37 @@
             <div class="form-group">
                 <label class="control-label col-md-2">Nombre: </label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Item.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Item.name, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-md-2">Descripción: </label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Item.description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Item.description, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-md-2">Categorias: </label>
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.categoryId,
+                    @Html.DropDownListFor(model => model.Item.categoryId,
                         (IEnumerable<SelectListItem>)ViewBag.categories,
                         "Elige una categoría", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.categoryId,
-                        "", new { @class = "text-danger"})
+                    @Html.ValidationMessageFor(model => model.Item.categoryId,
+                        "", new { @class = "text-danger" })
                 </div>
             </div>
-            @*
+
             <div class="form-group">
-                <label class="control-label col-md-2">Image: </label>
+                <label class="control-label col-md-2">Imagen: </label>
                 <div class="col-md-10">
-                    <input class="form-control" type="file" name="Image"/>
+                    @Html.TextBoxFor(m => m.FileBase, new { @class = "form-control", type = "file" })
                 </div>
             </div>
-            *@
+
             <div class="form-group">
                 <div class="back-link-margin col-md-1 col-md-offset-1">
                     @Html.ActionLink("Regresar", "Index")

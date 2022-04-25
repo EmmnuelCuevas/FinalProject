@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -51,18 +52,26 @@ namespace finalProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,itemId,categoryId,name,description,image,createdOn")] Item item)
+        public ActionResult Create(Item item, HttpPostedFileBase fileBase)
         {
             item.itemId = Guid.NewGuid();
+
             if (ModelState.IsValid)
             {
+                if (fileBase != null)
+                {
+                    MemoryStream target = new MemoryStream();
+                    fileBase.InputStream.CopyTo(target);
+                    item.image = target.ToArray();
+                }
+
                 db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.categories = new SelectList(db.Categories, "id", "name", item.categoryId);
-            return View(item);
+            return View();
         }
 
         // GET: Items/Edit/5
@@ -77,8 +86,10 @@ namespace finalProject.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.categories = new SelectList(db.Categories, "id", "name", item.categoryId);
-            return View(item);
+            var model = new ItemViewModel();
+            model.Item = item;
+            ViewBag.categories = new SelectList(db.Categories, "id", "name", model.Item.categoryId);
+            return View(model);
         }
 
         // POST: Items/Edit/5
@@ -86,16 +97,27 @@ namespace finalProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,itemId,categoryId,name,description,image,createdOn")] Item item)
+        public ActionResult Edit(Item item, HttpPostedFileBase fileBase)
         {
             if (ModelState.IsValid)
             {
+                if (fileBase != null)
+                {
+                    MemoryStream target = new MemoryStream();
+                    fileBase.InputStream.CopyTo(target);
+                    item.image = target.ToArray();
+                }
+
                 db.Entry(item).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", "Items");
             }
+
             ViewBag.categories = new SelectList(db.Categories, "id", "name");
-            return View(item);
+            var model = new ItemViewModel();
+            model.Item = item;
+            model.FileBase = fileBase;
+            return View(model);
         }
 
         // GET: Items/Delete/5

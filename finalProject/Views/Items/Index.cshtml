@@ -22,12 +22,12 @@
         <section class="category-list">
             <h2 class="text-info" style="text-align:center">Categorias</h2>
             <div id="categories">
-            @foreach (var c in Model.Categories)
-            {
-                <div class="category-item">
-                    @Html.ActionLink(c.name, "DisplayCategory", new { id = c.id }, new { @class = "category-link" })
-                </div>
-            }
+                @foreach (var c in Model.Categories)
+                {
+                    <div class="category-item">
+                        @Html.ActionLink(c.name, "DisplayCategory", new { id = c.id }, new { @class = "category-link" })
+                    </div>
+                }
             </div>
             <div style="margin-top: 1rem">
                 <a class="thematic-title" href="/Categories/Create">Nueva Categoría</a>
@@ -54,8 +54,18 @@
                     {
                         <div class="item">
                             <div class="content">
-                                <input type="text" class="text" value="@item.name" readonly />
-                                <label class="text" style="font-weight:100">@item.description</label>
+                                @{
+                                    if (item.image != null && item.image.Length > 0)
+                                    {
+                                        var base64 = Convert.ToBase64String(item.image);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                        <img src="@imgSrc" class="item-image"/>
+                                    }
+                                 }
+                                <div>
+                                    <input type="text" class="text" value="@item.name" readonly />
+                                    <label class="text">@item.description</label>
+                                </div>
                             </div>
                             <div class="actions">
                                 @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "btn edit" })
