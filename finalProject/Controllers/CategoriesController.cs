@@ -114,6 +114,7 @@ namespace finalProject.Controllers
             Category category = db.Categories.Find(id);
             db.Categories.Remove(category);
             db.SaveChanges();
+            TempData.Remove("selectedCategoryId");
             return RedirectToAction("Index", "Items");
         }
 

@@ -1,7 +1,7 @@
 ﻿@model finalProject.Models.ItemViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Item";
 }
 
 @using (Html.BeginForm("Create", "Items", FormMethod.Post, new { enctype = "multipart/form-data"} ))
@@ -11,8 +11,6 @@
         <div class="col-md-1"></div>
 
         <div class="form-horizontal col-md-10">
-            @Html.HiddenFor(m => m.Item.id)
-            @Html.HiddenFor(m => m.Item.itemId)
 
             <h4 class="thematic-title">Nuevo item</h4>
             <hr />
@@ -48,7 +46,7 @@
             <div class="form-group">
                 <label class="control-label col-md-2">Imagen: </label>
                 <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.FileBase, new { @class = "form-control", type = "file" })
+                    @Html.TextBoxFor(m => m.FileBase, new { @class = "form-control", type = "file"})
                 </div>
             </div>
 

@@ -54,10 +54,9 @@ namespace finalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Item item, HttpPostedFileBase fileBase)
         {
-            item.itemId = Guid.NewGuid();
-
             if (ModelState.IsValid)
             {
+                item.itemId = Guid.NewGuid();
                 if (fileBase != null)
                 {
                     MemoryStream target = new MemoryStream();
