@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DataAccessLayer.Models
@@ -11,7 +12,9 @@ namespace DataAccessLayer.Models
             id = Guid.NewGuid();
             createdOn = DateTime.Now;
         }
+        [Required]
         public Guid id { get; set; }
+
         public DateTime createdOn { get; set; }
 
 
