@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using DataAccessLayer.Context;
 using DataAccessLayer.Models;
+using finalProject.Filters;
 
 namespace finalProject.Controllers
 {
+    [CustomAuthFilter]
     public class CategoriesController : Controller
     {
         private AppDbContext db = new AppDbContext();

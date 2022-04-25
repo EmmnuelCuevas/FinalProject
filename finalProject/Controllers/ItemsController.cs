@@ -9,10 +9,12 @@ using System.Web;
 using System.Web.Mvc;
 using DataAccessLayer.Context;
 using DataAccessLayer.Models;
+using finalProject.Filters;
 using finalProject.Models;
 
 namespace finalProject.Controllers
 {
+    [CustomAuthFilter]
     public class ItemsController : Controller
     {
         private AppDbContext db = new AppDbContext();
