@@ -9,6 +9,5 @@ namespace finalProject.Models
     public class FrontPageViewModel
     {
         public List<Category> Categories { get; set; }
-        public List<Item> Items { get; set; }
     }
 }
