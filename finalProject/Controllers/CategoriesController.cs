@@ -49,7 +49,7 @@ namespace finalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,categoryId,name,createdOn")] Category category)
         {
-            category.categoryId = Guid.NewGuid();
+            // category.categoryId = Guid.NewGuid();
             if (ModelState.IsValid)
             {
                 db.Categories.Add(category);

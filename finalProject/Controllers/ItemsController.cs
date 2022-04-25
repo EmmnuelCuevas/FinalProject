@@ -56,7 +56,7 @@ namespace finalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                item.itemId = Guid.NewGuid();
+                //item.itemId = Guid.NewGuid();
                 if (fileBase != null)
                 {
                     MemoryStream target = new MemoryStream();

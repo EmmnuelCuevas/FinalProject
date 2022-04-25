@@ -236,6 +236,10 @@
     <Compile Include="Migrations\202204252248452_added required validation to some columns.designer.cs">
       <DependentUpon>202204252248452_added required validation to some columns.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204252309168_fk added to category table.cs" />
+    <Compile Include="Migrations\202204252309168_fk added to category table.designer.cs">
+      <DependentUpon>202204252309168_fk added to category table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Category.cs" />
@@ -256,6 +260,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204252248452_added required validation to some columns.resx">
       <DependentUpon>202204252248452_added required validation to some columns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204252309168_fk added to category table.resx">
+      <DependentUpon>202204252309168_fk added to category table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
