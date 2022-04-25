@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DataAccessLayer.Context;
+using DataAccessLayer.Models;
+using finalProject.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,70 +23,44 @@ namespace finalProject.Controllers
             return View();
         }
 
-        // GET: Login/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Login/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Login(LoginPageViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                using (var context = new AppDbContext())
+                {
+                    var password = model.password;
 
-                return RedirectToAction("Index");
+                    User user = context.Users
+                                       .Where(u => u.email == model.email && u.password == password)
+                                       .FirstOrDefault();
+
+                    if (user != null)
+                    {
+                        Session["UserName"] = user.email;
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid User Name or Password");
+                        return View(model);
+                    }
+                }
             }
-            catch
+            else
             {
-                return View();
+                return View(model);
             }
         }
 
-        // GET: Login/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Login/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            Session["UserName"] = string.Empty;
+            return RedirectToAction("Index", "Home");
         }
 
-        // GET: Login/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Login/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
