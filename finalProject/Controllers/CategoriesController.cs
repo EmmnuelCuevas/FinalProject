@@ -49,11 +49,12 @@ namespace finalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,categoryId,name,createdOn")] Category category)
         {
+            category.categoryId = Guid.NewGuid();
             if (ModelState.IsValid)
             {
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Items");
             }
 
             return View(category);
@@ -85,7 +86,7 @@ namespace finalProject.Controllers
             {
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Items");
             }
             return View(category);
         }
@@ -113,7 +114,7 @@ namespace finalProject.Controllers
             Category category = db.Categories.Find(id);
             db.Categories.Remove(category);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Items");
         }
 
         protected override void Dispose(bool disposing)

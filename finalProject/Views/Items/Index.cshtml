@@ -1,0 +1,88 @@
+﻿@model finalProject.Models.FrontPageViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .scrollable {
+        min-height: 200px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+</style>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+</head>
+
+<main>
+    <div class="grid-container">
+
+        <section class="category-list">
+            <h2 class="text-info" style="text-align:center">Categorias</h2>
+            <div id="categories">
+                @foreach (var c in Model.Categories)
+                {
+                    <div class="category-item">
+                        @Html.ActionLink(c.name, "DisplayCategory", new { id = c.id }, new { @class = "category-link" })
+                    </div>
+                }
+            </div>
+            <div style="margin-top: 1rem">
+                <a class="thematic-title" href="/Categories/Create">Nueva Categoría</a>
+            </div>
+        </section>
+
+        <section class="item-list">
+            @{
+                var category = Model.Categories.FirstOrDefault();
+                if (TempData.ContainsKey("selectedCategoryId"))
+                {
+                    var id = (Guid)TempData.Peek("selectedCategoryId");
+                    category = Model.Categories.First(t => t.id == id);
+                }
+
+                string text = category != null ? category.name : "No hay categorías disponibles";
+
+                <h2 style="text-align:center; color: var(--gray)">@text</h2>
+            }
+
+            <div id="items" class="scrollable">
+                @{
+                    foreach (var item in category.Items)
+                    {
+                        <div class="item">
+                            <div class="content">
+                                @{
+                                    if (item.image != null && item.image.Length > 0)
+                                    {
+                                        var base64 = Convert.ToBase64String(item.image);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                        <img src="@imgSrc" class="item-image"/>
+                                    }
+                                 }
+                                <div>
+                                    <input type="text" class="text" value="@item.name" readonly />
+                                    <label class="text">@item.description</label>
+                                </div>
+                            </div>
+                            <div class="actions">
+                                @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "btn edit" })
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div id="new-item-block">
+                <div class="row">
+                    <a href="/Items/Create">Nuevo Item</a>
+                </div>
+                <div class="row">
+                    @Html.ActionLink("Editar Categoría", "Edit",
+                        "Categories", new { id = Model.Categories.First().id }, null)
+                </div>
+            </div>
+        </section>
+    </div>
+</main>

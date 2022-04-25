@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DataAccessLayer.Context;
 using DataAccessLayer.Models;
+using finalProject.Models;
 
 namespace finalProject.Controllers
 {
@@ -18,8 +20,9 @@ namespace finalProject.Controllers
         // GET: Items
         public ActionResult Index()
         {
-            var items = db.Items.Include(i => i.Category);
-            return View(items.ToList());
+            var model = new FrontPageViewModel();
+            model.Categories = db.Categories.Include(i => i.Items).ToList();
+            return View(model);
         }
 
         // GET: Items/Details/5
@@ -40,7 +43,7 @@ namespace finalProject.Controllers
         // GET: Items/Create
         public ActionResult Create()
         {
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name");
+            ViewBag.categories = new SelectList(db.Categories, "id", "name");
             return View();
         }
 
@@ -49,17 +52,26 @@ namespace finalProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,itemId,categoryId,name,description,image,createdOn")] Item item)
+        public ActionResult Create(Item item, HttpPostedFileBase fileBase)
         {
+            item.itemId = Guid.NewGuid();
+
             if (ModelState.IsValid)
             {
+                if (fileBase != null)
+                {
+                    MemoryStream target = new MemoryStream();
+                    fileBase.InputStream.CopyTo(target);
+                    item.image = target.ToArray();
+                }
+
                 db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", item.categoryId);
-            return View(item);
+            ViewBag.categories = new SelectList(db.Categories, "id", "name", item.categoryId);
+            return View();
         }
 
         // GET: Items/Edit/5
@@ -74,8 +86,10 @@ namespace finalProject.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", item.categoryId);
-            return View(item);
+            var model = new ItemViewModel();
+            model.Item = item;
+            ViewBag.categories = new SelectList(db.Categories, "id", "name", model.Item.categoryId);
+            return View(model);
         }
 
         // POST: Items/Edit/5
@@ -83,16 +97,27 @@ namespace finalProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,itemId,categoryId,name,description,image,createdOn")] Item item)
+        public ActionResult Edit(Item item, HttpPostedFileBase fileBase)
         {
             if (ModelState.IsValid)
             {
+                if (fileBase != null)
+                {
+                    MemoryStream target = new MemoryStream();
+                    fileBase.InputStream.CopyTo(target);
+                    item.image = target.ToArray();
+                }
+
                 db.Entry(item).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Items");
             }
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", item.categoryId);
-            return View(item);
+
+            ViewBag.categories = new SelectList(db.Categories, "id", "name");
+            var model = new ItemViewModel();
+            model.Item = item;
+            model.FileBase = fileBase;
+            return View(model);
         }
 
         // GET: Items/Delete/5
@@ -107,6 +132,7 @@ namespace finalProject.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.categories = new SelectList(db.Categories, "id", "name", item.categoryId);
             return View(item);
         }
 
@@ -118,6 +144,12 @@ namespace finalProject.Controllers
             Item item = db.Items.Find(id);
             db.Items.Remove(item);
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult DisplayCategory(Guid id)
+        {
+            TempData["selectedCategoryId"] = id;
             return RedirectToAction("Index");
         }
 
