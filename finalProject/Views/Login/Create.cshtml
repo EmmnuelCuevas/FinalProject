@@ -1,0 +1,31 @@
+﻿@model DataAccessLayer.Models.User
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "../Shared/_LoginLayout.cshtml";
+}
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="active"> Acceso de usuario </h2>
+        <h2 class="inactive underlineHover">Sign Up </h2>
+
+        <!-- Login Form -->
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @*
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="usuario">
+            <input type="text" id="password" class="fadeIn third" name="login" placeholder="contraseña">
+            <input type="submit" class="fadeIn fourth" value="Entrar">
+            *@
+            @Html.EditorFor(m => m.name, new { htmlAttributes = new { @type = "text", @class = "fadeIn second", @placeholder = "usuario" } })
+            @Html.EditorFor(m => m.lastName, new { htmlAttributes = new { @type = "text", @class = "fadeIn third", @placeholder = "apellido" } })
+            @Html.EditorFor(m => m.email, new { htmlAttributes = new { @type = "text", @class = "fadeIn fourth", @placeholder = "email" } })
+            @Html.EditorFor(m => m.password, new { htmlAttributes = new { @type = "text", @class = "fadeIn fifth", @placeholder = "contraseña" } })
+            <input type="submit" class="fadeIn fourth" value="Registrar">
+        }
+
+    </div>
+</div>
