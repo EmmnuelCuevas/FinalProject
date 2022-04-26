@@ -40,7 +40,7 @@
                 if (TempData.ContainsKey("selectedCategoryId"))
                 {
                     var id = (Guid)TempData.Peek("selectedCategoryId");
-                    category = Model.User.Categories.First(t => t.id == id);
+                    category = Model.User.Categories.FirstOrDefault(t => t.id == id);
                 }
 
                 string text = category != null ? category.name : "No hay categorías disponibles";

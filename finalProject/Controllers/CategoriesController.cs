@@ -89,6 +89,9 @@ namespace finalProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userEmail = Session["UserName"].ToString().ToLower();
+                var User = db.Users.Where(x => x.email.ToLower() == userEmail).FirstOrDefault();
+                category.userId = User.id;
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", "Items");

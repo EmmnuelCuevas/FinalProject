@@ -20,12 +20,13 @@ namespace finalProject.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: Items
+        
         public ActionResult Index()
         {
             var model = new FrontPageViewModel();
             var userEmail = Session["UserName"].ToString().ToLower();
-            var User = db.Users.Where(x=>x.email.ToLower() == userEmail ).FirstOrDefault();
-            if(User !=null)
+            var User = db.Users.Where(x => x.email.ToLower() == userEmail).FirstOrDefault();
+            if (User !=null)
             {
                 model.User = User;
                 return View(model);
@@ -53,7 +54,9 @@ namespace finalProject.Controllers
         // GET: Items/Create
         public ActionResult Create()
         {
-            ViewBag.categories = new SelectList(db.Categories, "id", "name");
+            var userEmail = Session["UserName"].ToString().ToLower();
+            var User = db.Users.Where(x => x.email.ToLower() == userEmail).FirstOrDefault();
+            ViewBag.categories = new SelectList(User.Categories.AsEnumerable(), "id", "name") ;
             return View();
         }
 
@@ -97,7 +100,9 @@ namespace finalProject.Controllers
             }
             var model = new ItemViewModel();
             model.Item = item;
-            ViewBag.categories = new SelectList(db.Categories, "id", "name", model.Item.categoryId);
+            var userEmail = Session["UserName"].ToString().ToLower();
+            var User = db.Users.Where(x => x.email.ToLower() == userEmail).FirstOrDefault();
+            ViewBag.categories = new SelectList(User.Categories.AsEnumerable(), "id", "name", model.Item.categoryId);
             return View(model);
         }
 
