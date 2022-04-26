@@ -23,7 +23,15 @@ namespace finalProject.Controllers
         public ActionResult Index()
         {
             var model = new FrontPageViewModel();
-            model.Categories = db.Categories.Include(i => i.Items).ToList();
+            var userEmail = Session["UserName"].ToString().ToLower();
+            var User = db.Users.Where(x=>x.email.ToLower() == userEmail ).FirstOrDefault();
+            if(User !=null)
+            {
+                model.User = User;
+                return View(model);
+            }
+            //model.User.Categories = db.Categories.Include(i => i.Items).ToList();
+            // change
             return View(model);
         }
 
