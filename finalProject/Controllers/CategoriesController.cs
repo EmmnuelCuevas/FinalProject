@@ -54,6 +54,9 @@ namespace finalProject.Controllers
             // category.categoryId = Guid.NewGuid();
             if (ModelState.IsValid)
             {
+                var userEmail = Session["UserName"].ToString().ToLower();
+                var User = db.Users.Where(x => x.email.ToLower() == userEmail).FirstOrDefault();
+                category.userId = User.id; 
                 db.Categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Items");

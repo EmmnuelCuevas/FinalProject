@@ -22,7 +22,7 @@
         <section class="category-list">
             <h2 class="text-info" style="text-align:center">Categorias</h2>
             <div id="categories">
-                @foreach (var c in Model.Categories)
+                @foreach (var c in Model.User.Categories)
                 {
                     <div class="category-item">
                         @Html.ActionLink(c.name, "DisplayCategory", new { id = c.id }, new { @class = "category-link" })
@@ -36,11 +36,11 @@
 
         <section class="item-list">
             @{
-                var category = Model.Categories.FirstOrDefault();
+                var category = Model.User.Categories.FirstOrDefault();
                 if (TempData.ContainsKey("selectedCategoryId"))
                 {
                     var id = (Guid)TempData.Peek("selectedCategoryId");
-                    category = Model.Categories.First(t => t.id == id);
+                    category = Model.User.Categories.First(t => t.id == id);
                 }
 
                 string text = category != null ? category.name : "No hay categorías disponibles";
@@ -85,7 +85,7 @@
                 </div>
                 <div class="row">
                     @Html.ActionLink("Editar Categoría", "Edit",
-                        "Categories", new { id = Model.Categories.First().id }, null)
+                        "Categories", new { id = Model.User.Categories.First().id }, null)
                 </div>
             </div>
         </section>

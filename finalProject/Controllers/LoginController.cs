@@ -40,7 +40,7 @@ namespace finalProject.Controllers
                     if (user != null)
                     {
                         Session["UserName"] = user.email;
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Items");
                     }
                     else
                     {
