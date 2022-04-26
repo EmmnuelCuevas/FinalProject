@@ -53,7 +53,7 @@ namespace finalProject.Controllers
         {
             // category.categoryId = Guid.NewGuid();
             string email = (string)Session["UserName"];
-            db.Categories.First(t => t.)
+            
             if (ModelState.IsValid)
             {
                 var userEmail = Session["UserName"].ToString().ToLower();

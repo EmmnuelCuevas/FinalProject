@@ -337,10 +337,6 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
-      <Project>{cc5c3499-19cf-4deb-b4d0-36eeba323734}</Project>
-      <Name>BusinessLogic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
       <Project>{71f06d7e-7369-4d1e-9081-4491f397e7bf}</Project>
       <Name>DataAccessLayer</Name>

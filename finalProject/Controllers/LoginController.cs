@@ -54,12 +54,11 @@ namespace finalProject.Controllers
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult LogOff()
         {
             Session["UserName"] = string.Empty;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Items");
         }
 
         [HttpGet]
