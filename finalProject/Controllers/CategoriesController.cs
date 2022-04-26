@@ -52,6 +52,8 @@ namespace finalProject.Controllers
         public ActionResult Create([Bind(Include = "id,categoryId,name,createdOn")] Category category)
         {
             // category.categoryId = Guid.NewGuid();
+            string email = (string)Session["UserName"];
+            db.Categories.First(t => t.)
             if (ModelState.IsValid)
             {
                 db.Categories.Add(category);

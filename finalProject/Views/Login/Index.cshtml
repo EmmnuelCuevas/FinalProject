@@ -8,24 +8,15 @@
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->
-        <h2 class="active"> Sign In </h2>
-        <h2 class="inactive underlineHover">Sign Up </h2>
+        <h2 class="active"> Acceso de usuario </h2>
+        <a href="/Login/Create" class="inactive underlineHover" style="font-size: 2rem; font-weight:400"> Registro </a>
 
-
-        @*
-        <!-- Login Form -->
-        <form>
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-            <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
-            <input type="submit" class="fadeIn fourth" value="Log In">
-        </form>
-        *@
         <!-- Login Form -->
         @using (Html.BeginForm("Login", "Login", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             @Html.EditorFor(m => m.email, new { htmlAttributes = new { @type = "text", @class = "fadeIn fourth", @placeholder = "email" } })
-            @Html.EditorFor(m => m.password, new { htmlAttributes = new { @type = "text", @class = "fadeIn fifth", @placeholder = "contraseña" } })
+            @Html.EditorFor(m => m.password, new { htmlAttributes = new { @type = "password", @class = "fadeIn fifth", @placeholder = "contraseña" } })
             <input type="submit" class="fadeIn fourth" value="Acceder">
         }
     </div>

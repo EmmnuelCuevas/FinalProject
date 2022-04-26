@@ -8,7 +8,7 @@
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->
-        <a href="/Login/Index" style="font-size: 2rem; font-weight:400">Acceso de usuario</a>
+        <a href="/Login/Index" style="font-size: 2rem; font-weight:400">Volver a acceso</a>
 
         <!-- Login Form -->
         @using (Html.BeginForm())
@@ -17,7 +17,7 @@
             @Html.EditorFor(m => m.name, new { htmlAttributes = new { @type = "text", @class = "fadeIn second", @placeholder = "usuario" } })
             @Html.EditorFor(m => m.lastName, new { htmlAttributes = new { @type = "text", @class = "fadeIn third", @placeholder = "apellido" } })
             @Html.EditorFor(m => m.email, new { htmlAttributes = new { @type = "text", @class = "fadeIn fourth", @placeholder = "email" } })
-            @Html.EditorFor(m => m.password, new { htmlAttributes = new { @type = "text", @class = "fadeIn fifth", @placeholder = "contraseña" } })
+            @Html.EditorFor(m => m.password, new { htmlAttributes = new { @type = "password", @class = "fadeIn fifth", @placeholder = "contraseña" } })
             <input type="submit" class="fadeIn fourth" value="Registrar">
         }
 
