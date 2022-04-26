@@ -31,7 +31,7 @@ namespace finalProject.Controllers
             {
                 using (var context = new AppDbContext())
                 {
-                    var password =  EncryptHelper.Encode(model.password); ;
+                    var password =  EncryptHelper.Encode(model.password);
 
                     User user = context.Users
                                        .Where(u => u.email == model.email && u.password == password)
@@ -44,14 +44,13 @@ namespace finalProject.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Invalid User Name or Password");
-                        return View(model);
+                        return null;
                     }
                 }
             }
             else
             {
-                return View(model);
+                return null;
             }
         }
 
