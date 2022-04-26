@@ -31,7 +31,7 @@ namespace finalProject.Controllers
             {
                 using (var context = new AppDbContext())
                 {
-                    var password =  EncryptHelper.Encode(model.password); ;
+                    var password =  EncryptHelper.Encode(model.password);
 
                     User user = context.Users
                                        .Where(u => u.email == model.email && u.password == password)
@@ -61,6 +61,31 @@ namespace finalProject.Controllers
         {
             Session["UserName"] = string.Empty;
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var context = new AppDbContext())
+                {
+                    user.password = EncryptHelper.Encode(user.password);
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return View();
+
         }
 
     }
