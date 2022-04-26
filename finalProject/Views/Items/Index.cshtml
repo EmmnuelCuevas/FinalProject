@@ -75,7 +75,7 @@
                                 @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "btn edit" })
                             </div>
                         </div>
-                    }
+                                    }
                 }
 
         </div>
@@ -84,8 +84,15 @@
                     <a href="/Items/Create">Nuevo Item</a>
                 </div>
                 <div class="row">
-                    @Html.ActionLink("Editar Categoría", "Edit",
-                        "Categories", new { id = Model.User.Categories.First().id }, null)
+                    @{
+                        Guid? myId = null;
+                        if (TempData.ContainsKey("selectedCategoryId"))
+                        {
+                            myId = (Guid)TempData.Peek("selectedCategoryId");
+                        }
+                        @Html.ActionLink("Editar Categoría", "Edit",
+                            "Categories", new { id = myId }, null)
+                    }
                 </div>
             </div>
         </section>
